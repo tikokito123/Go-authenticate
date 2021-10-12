@@ -6,6 +6,7 @@ COPY server/go.sum .
 RUN go mod download
 
 COPY server/*.go .
+COPY server/.env .
 
 RUN go build -o run-server .
 

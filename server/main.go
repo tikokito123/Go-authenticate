@@ -5,10 +5,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -44,8 +47,7 @@ func handleRequests() {
 	router.HandleFunc("/users/{id}", getUser)
 
 	//listen
-	fmt.Print(http.ListenAndServe("0.0.0.0:3000", router))
-
+	http.ListenAndServe(os.Getenv("HOST")+":"+os.Getenv("PORT"), router)
 }
 
 func homePage(w http.ResponseWriter, r *http.Request) {
@@ -71,7 +73,8 @@ func getUser(w http.ResponseWriter, r *http.Request) {
 	id, _ := primitive.ObjectIDFromHex(params["id"])
 	var user User
 	collection := client.Database("Golang").Collection("users")
-	ctx, _ := context.WithTimeout(context.Background(), 20*time.Second)
+	ctx, cancle := context.WithTimeout(context.Background(), 20*time.Second)
+	defer cancle()
 	err := collection.FindOne(ctx, User{ID: id}).Decode(&user)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -84,7 +87,6 @@ func getUser(w http.ResponseWriter, r *http.Request) {
 func returnAllArticles(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("Endpoint hit: returned Articles")
 	json.NewEncoder(w).Encode(Articles)
-
 }
 
 func createNewArticle(w http.ResponseWriter, r *http.Request) {
@@ -136,12 +138,20 @@ func getUsers(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal(err, " could not load env")
+	}
+
 	//connect to mongo
 	ctx, cancle := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancle()
-	client, _ = mongo.Connect(ctx, options.Client().ApplyURI("mongodb://localhost:27017/users")) //todo env
+	client, _ = mongo.Connect(ctx, options.Client().ApplyURI(os.Getenv("mongo_URL"))) //todo env
 
 	fmt.Println("Rest API v2.0 - Mux Routers")
 
+	fmt.Println("listen on " + os.Getenv("HOST") + ":" + os.Getenv("PORT"))
+
 	handleRequests()
+
 }

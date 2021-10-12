@@ -16,3 +16,12 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build the Docker image
       run: docker build -t go_container . --file Dockerfile
+
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Test
+      run: go test
