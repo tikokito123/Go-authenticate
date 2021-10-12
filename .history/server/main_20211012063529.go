@@ -44,7 +44,7 @@ func handleRequests() {
 	router.HandleFunc("/users/{id}", getUser)
 
 	//listen
-	fmt.Print(http.ListenAndServe("0.0.0.0:3000", router))
+	fmt.Print(http.ListenAndServe("localhost:3000", router))
 
 }
 
