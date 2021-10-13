@@ -30,4 +30,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Go unit testing
-        run: go test main_test.go
+        run: go test
