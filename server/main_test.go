@@ -28,7 +28,7 @@ func TestInstertData(t *testing.T) {
 	if err != nil {
 		logrus.Warn(err, "ther file .env.dev was not found")
 	}
-
+	logrus.Info(os.Getenv("mongo_URL"))
 	client, err := mongo.Connect(context.Background(), options.Client().ApplyURI(os.Getenv("mongo_URL")))
 	hex, _ := randomHex(10)
 	id, _ := primitive.ObjectIDFromHex(hex)
@@ -38,6 +38,7 @@ func TestInstertData(t *testing.T) {
 	}
 	collection := client.Database("Golang").Collection("testing")
 	res, err := collection.InsertOne(context.Background(), User{id, "user_test", "123456"})
+
 	assert.Nil(t, err)
 	assert.IsType(t, &mongo.InsertOneResult{}, res)
 }

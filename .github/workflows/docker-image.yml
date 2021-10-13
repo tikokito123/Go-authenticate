@@ -32,4 +32,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Go unit testing
-        run: go test
+        run: |
+          cd server 
+          go test
