@@ -141,12 +141,6 @@ func getUsers(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	//log
-	logrus.WithFields(logrus.Fields{
-		"animal": "walrus",
-		"number": 1,
-		"size":   10,
-	}).Info("A walrus appears")
-
 	logrus.SetFormatter(&logrus.TextFormatter{
 		DisableColors: true,
 		FullTimestamp: true,
@@ -164,7 +158,7 @@ func main() {
 	client, _ = mongo.Connect(ctx, options.Client().ApplyURI(os.Getenv("mongo_URL"))) //todo env
 
 	logrus.Info("Rest API v2.0 - Mux Routers")
-	
+
 	logrus.Info("listen on " + os.Getenv("HOST") + ":" + os.Getenv("PORT"))
 
 	handleRequests()
