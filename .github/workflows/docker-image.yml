@@ -28,7 +28,7 @@ jobs:
     env:
       HOST: ${{ secrets.HOST }}
       PORT: ${{ secrets.PORT }}
-      mongo_URL: ${{ secrets.MONGO_URL }}
+      mongo_URL: mongodb://
     steps:
       - uses: actions/checkout@v2
       - name: Go unit testing
