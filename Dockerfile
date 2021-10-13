@@ -9,7 +9,7 @@ COPY server/go.mod .
 COPY server/go.sum .
 RUN go mod download
 
-COPY /server/*.go .
+COPY server/*.go ./
 
 RUN go build -o run-server .
 
