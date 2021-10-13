@@ -9,6 +9,8 @@ COPY server/*.go .
 
 RUN go build -o run-server .
 
+ 
+
 EXPOSE 3000
 
 CMD ["./run-server"]

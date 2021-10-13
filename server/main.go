@@ -5,13 +5,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 	"time"
 
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
+	"github.com/sirupsen/logrus"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -99,10 +99,12 @@ func createNewUser(w http.ResponseWriter, r *http.Request) {
 	var user User
 
 	json.NewDecoder(r.Body).Decode(&user)
-	fmt.Print(user)
+
 	collection := client.Database("Golang").Collection("users")
 	ctx, cancle := context.WithTimeout(context.Background(), 20*time.Second)
+
 	defer cancle()
+
 	result, _ := collection.InsertOne(ctx, user)
 
 	json.NewEncoder(w).Encode(result)
@@ -138,9 +140,22 @@ func getUsers(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	//log
+	logrus.WithFields(logrus.Fields{
+		"animal": "walrus",
+		"number": 1,
+		"size":   10,
+	}).Info("A walrus appears")
+
+	logrus.SetFormatter(&logrus.TextFormatter{
+		DisableColors: true,
+		FullTimestamp: true,
+	})
+
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal(err, " could not load env")
+		//log.Fatal(err, " could not load env")
+		logrus.Warn("could not find env file")
 	}
 
 	//connect to mongo
@@ -148,10 +163,9 @@ func main() {
 	defer cancle()
 	client, _ = mongo.Connect(ctx, options.Client().ApplyURI(os.Getenv("mongo_URL"))) //todo env
 
-	fmt.Println("Rest API v2.0 - Mux Routers")
-
-	fmt.Println("listen on " + os.Getenv("HOST") + ":" + os.Getenv("PORT"))
+	logrus.Info("Rest API v2.0 - Mux Routers")
+	
+	logrus.Info("listen on " + os.Getenv("HOST") + ":" + os.Getenv("PORT"))
 
 	handleRequests()
-
 }
