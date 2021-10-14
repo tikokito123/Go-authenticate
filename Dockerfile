@@ -11,8 +11,6 @@ RUN go mod download
 
 COPY server/*.go ./
 
-RUN go test
-
 RUN go build -o run-server .
 
 EXPOSE 3000
