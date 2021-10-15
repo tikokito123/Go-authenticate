@@ -4,6 +4,11 @@ import (
 	"context"
 	"crypto/rand"
 	"encoding/hex"
+	"fmt"
+	"io"
+	"io/ioutil"
+	"net/http"
+	"net/http/httptest"
 	"os"
 	"testing"
 
@@ -41,4 +46,24 @@ func TestInstertData(t *testing.T) {
 
 	assert.Nil(t, err)
 	assert.IsType(t, &mongo.InsertOneResult{}, res)
+}
+
+func TestHttpRequest(t *testing.T) {
+	handler := func(w http.ResponseWriter, r *http.Request) {
+		io.WriteString(w, "{ \"MyLife\": \"shit\" }")
+	}
+
+	req := httptest.NewRequest("GET", "http://localhost:3000/test/life", nil)
+	w := httptest.NewRecorder()
+	handler(w, req)
+
+	resp := w.Result()
+	body, _ := ioutil.ReadAll(resp.Body)
+
+	fmt.Println(string(body))
+
+	if 200 != resp.StatusCode {
+		t.Fatal("status code not OK")
+	}
+
 }
