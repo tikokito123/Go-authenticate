@@ -29,6 +29,7 @@ jobs:
       HOST: ${{ secrets.HOST }}
       PORT: ${{ secrets.PORT }}
       mongo_URL: ${{ secrets.MONGO_URL }}
+      JWT_TOKEN: ${{ secrets.JWT_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       - name: Go unit testing
@@ -36,5 +37,5 @@ jobs:
           cd server 
           go build -o run-server
           ./run-server &
-          
+
           go test

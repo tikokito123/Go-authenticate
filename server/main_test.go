@@ -38,15 +38,10 @@ func TestInstertData(t *testing.T) {
 	//try to load env
 	err := godotenv.Load(".env.dev")
 	if err != nil {
-		logrus.Warn(err, "ther file .env.dev was not found")
+		logrus.Warn(err, "the file .env.dev was not found")
 	}
 	logrus.Info(os.Getenv("mongo_URL"))
 	logrus.Debug("here on Insert data")
-
-	if err != nil {
-		t.Error(err)
-		logrus.Error(err, "Could not access the collection database")
-	}
 
 	//hex to create Id for mongo
 	hex, _ := randomHex(10)
@@ -54,7 +49,7 @@ func TestInstertData(t *testing.T) {
 	logrus.Debug("Hex was made")
 	//hashing the password
 	hash, _ := routes.HashPassword(password)
-	logrus.Info(hash)
+
 	logrus.Debug("hash was made")
 	//connect to the Database
 	client, err := database.GetMongoClient()
