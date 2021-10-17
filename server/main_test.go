@@ -15,42 +15,69 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
+	models "github.com/tikokito123/main/Models"
+	"github.com/tikokito123/main/database"
+	"github.com/tikokito123/main/routes"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func randomHex(n int) (string, error) {
+	logrus.Debug("here on randomHex")
 	bytes := make([]byte, n)
 	if _, err := rand.Read(bytes); err != nil {
 		return "", err
 	}
+
 	return hex.EncodeToString(bytes), nil
 }
-
 func TestInstertData(t *testing.T) {
+	//vars
+	var password string = "SomeUserPasswordToHash"
+
+	//try to load env
 	err := godotenv.Load(".env.dev")
 	if err != nil {
 		logrus.Warn(err, "ther file .env.dev was not found")
 	}
 	logrus.Info(os.Getenv("mongo_URL"))
-	client, err := mongo.Connect(context.Background(), options.Client().ApplyURI(os.Getenv("mongo_URL")))
-	hex, _ := randomHex(10)
-	id, _ := primitive.ObjectIDFromHex(hex)
+	logrus.Debug("here on Insert data")
+
 	if err != nil {
 		t.Error(err)
 		logrus.Error(err, "Could not access the collection database")
 	}
-	collection := client.Database("Golang").Collection("testing")
-	res, err := collection.InsertOne(context.Background(), User{id, "user_test", "123456"})
 
+	//hex to create Id for mongo
+	hex, _ := randomHex(10)
+	id, _ := primitive.ObjectIDFromHex(hex)
+	logrus.Debug("Hex was made")
+	//hashing the password
+	hash, _ := routes.HashPassword(password)
+	logrus.Info(hash)
+	logrus.Debug("hash was made")
+	//connect to the Database
+	client, err := database.GetMongoClient()
+	if err != nil {
+		logrus.Error(err.Error())
+	}
+
+	collection := client.Database(database.DB).Collection(database.Collection_users)
+
+	res, err := collection.InsertOne(context.Background(), models.User{id, "user_test", hash})
+
+	if err != nil {
+		logrus.Error(err.Error())
+	}
+	//assert result
 	assert.Nil(t, err)
 	assert.IsType(t, &mongo.InsertOneResult{}, res)
 }
 
 func TestHttpRequest(t *testing.T) {
+	logrus.Debug("here on request http")
 	handler := func(w http.ResponseWriter, r *http.Request) {
-		io.WriteString(w, "{ \"MyLife\": \"shit\" }")
+		io.WriteString(w, "{ \"status\": \"Ok\" }")
 	}
 
 	req := httptest.NewRequest("GET", "http://localhost:3000/test/life", nil)
