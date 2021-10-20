@@ -14,11 +14,4 @@ variable "profile" {
     default = "TIKOKITO"
 }
 
-variable "access_key" {
-    type = string
-    description = ["your aws access_key"]
-}
-variable "secret_key" {
-    type = string
-    description = ["your aws secret_key"]
-}   
+

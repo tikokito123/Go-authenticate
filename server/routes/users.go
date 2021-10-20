@@ -22,9 +22,8 @@ var client *mongo.Client
 
 type User struct {
 	ID       primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
-	Username string             `json:"username,omitempty" bson:"username,omitempty"`
-	Password string             `json:"password,omitempty" bson:"password,omitempty"`
-	Email    string             `json:"email,omitempty" bson:"email,omitempty"`
+	Username string             `json:"username" bson:"username,omitempty"`
+	Password string             `json:"password" bson:"password,omitempty"`
 }
 
 func HashPassword(password string) (string, error) {
@@ -63,9 +62,22 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 
 func CreateNewUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("content-type", "application/json")
+
 	var user User
 
-	json.NewDecoder(r.Body).Decode(&user)
+	r.ParseForm()
+
+	user.Username = r.FormValue("username")
+	user.Password = r.FormValue("password")
+
+	/*if you want to use postman, use this line of code
+
+	if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		logrus.Error(err.Error())
+		return
+	}
+	*/
 
 	client, err := database.GetMongoClient()
 	if err != nil {
@@ -74,7 +86,7 @@ func CreateNewUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	collection := client.Database(database.DB).Collection(database.Collection_users)
-	logrus.Info(collection)
+
 	ctx, cancle := context.WithTimeout(context.Background(), 20*time.Second)
 
 	defer cancle()
@@ -84,7 +96,7 @@ func CreateNewUser(w http.ResponseWriter, r *http.Request) {
 		logrus.Error(err.Error())
 		return
 	}
-	logrus.Info("hashed: " + user.Password + " to: " + hash)
+	user.Password = hash
 
 	result, err := collection.InsertOne(ctx, user)
 	if err != nil {
