@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tikal-Test</title>
+</head>
+<body>
+    <h1>Welcome</h1>
+    <form id="signUp" onsubmit="redirect()" action="http://localhost:80/users/create" method="post">
+        <label for="username">username: <input type="username" name="username" > </label>
+        <br>
+        <label for="password">Password: <input type="password" name="password" > </label>
+        <br>
+        
+        <button type="submit">register!</button>
+    </form>
+
+    <h5>I like pizza</h5>
+
+    <script>
+        document.getElementById("signUp").addEventListener("submit", redirect);
+
+        function redirect() {
+            window.location.replace = "http://www.w3schools.com";
+        }
+    </script>
+</body>
+</html>

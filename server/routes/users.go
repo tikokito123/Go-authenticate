@@ -3,7 +3,6 @@ package routes
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -92,20 +91,26 @@ func CreateNewUser(w http.ResponseWriter, r *http.Request) {
 		logrus.Error(err.Error())
 		return
 	}
+	logrus.Info(result)
 
 	tokenString, err := GenerateToken(user.Username)
+
+	r.AddCookie(&http.Cookie{
+		Name:     "jwt",
+		Value:    tokenString,
+		HttpOnly: true,
+		MaxAge:   0,
+	})
 
 	if err != nil {
 		log.Print("error")
 		logrus.Error("could not generate token", err.Error())
 		return
 	}
-	fmt.Print(tokenString)
-	json.NewEncoder(w).Encode(result)
+	http.Redirect(w, r, "/users/", http.StatusMovedPermanently)
 }
 
 func GetUsers(w http.ResponseWriter, r *http.Request) {
-	logrus.Debug("here cusemec")
 	w.Header().Add("content-type", "application/json")
 	var users []User
 

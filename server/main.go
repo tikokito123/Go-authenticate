@@ -1,9 +1,10 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 	"os"
+	"path"
+	"text/template"
 
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
@@ -16,14 +17,16 @@ func handleRequests() {
 	//subroutersc
 	users := router.PathPrefix("/users").Subrouter()
 	//middlewares
+
 	//gets
 	router.HandleFunc("/", homePage).Methods("GET")
+
 	//users
 	users.HandleFunc("/create", routes.CreateNewUser).Methods("POST")
 	//users.HandleFunc("/{id}", routes.GetUser).Methods("GET")
 	users.HandleFunc("/", routes.GetUsers).Methods("GET")
 	//listen
-	if err := http.ListenAndServe(":"+os.Getenv("PORT"), router); err != nil {
+	if err := http.ListenAndServe(os.Getenv("HOST")+":"+os.Getenv("PORT"), router); err != nil {
 		logrus.Error("could not listen and serve: ", err.Error())
 		return
 	}
@@ -31,7 +34,20 @@ func handleRequests() {
 }
 
 func homePage(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Welcome to the HomePage!")
+	fp := path.Join("templates", "index.html")
+
+	tmpl, err := template.ParseFiles(fp)
+	if err != nil {
+		logrus.Error(err.Error())
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if err := tmpl.Execute(w, "Here I am"); err != nil {
+		logrus.Error(err.Error())
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 
 func main() {
@@ -48,7 +64,7 @@ func main() {
 	}
 
 	logrus.Info("Rest API v2.0 - Mux Routers")
-	logrus.Info("listen on localhost" + ":" + os.Getenv("PORT"))
+	logrus.Info("listen on " + os.Getenv("HOST") + ":" + os.Getenv("PORT"))
 
 	handleRequests()
 }

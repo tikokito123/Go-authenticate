@@ -4,3 +4,12 @@ node_modules
 .env
 data
 *.env*
+secret.json
+
+#terraform
+
+terraform/*
+
+!*vars.tf
+!*aws.tf
+!run-docker.sh
