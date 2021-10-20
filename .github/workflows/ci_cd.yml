@@ -11,11 +11,12 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+
     env:
       HOST: ${{ secrets.HOST }}
       PORT: ${{ secrets.PORT }}
       mongo_URL: ${{ secrets.MONGO_URL }}
-    
+    steps: 
     - name: Check out Repo
     - uses: actions/checkout@v2
 
