@@ -54,5 +54,5 @@ jobs:
           cd server 
           go build -o run-server
           ./run-server &
-          echo "hello world"
+          echo "something has has been changed"
           go test
