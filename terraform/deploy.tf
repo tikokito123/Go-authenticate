@@ -25,10 +25,10 @@ resource "aws_key_pair" "key" {
 }
 
 resource "aws_instance" "app_server" {
-  ami           = var.ami
-  instance_type = "t2.micro"
-  count = 2
-  subnet_id              = "${element(module.vpc.public_subnets, count.index)}"
+  ami                    = var.ami
+  instance_type          = "t2.micro"
+  count                  = 2
+  subnet_id              = element(module.vpc.public_subnets, count.index)
   key_name               = aws_key_pair.key.key_name
   user_data              = file("./run-docker.sh")
   vpc_security_group_ids = ["${aws_security_group.firewall.id}"]
@@ -57,6 +57,7 @@ module "vpc" {
   tags = {
     Terraform   = "true"
     Environment = var.env
+
   }
 
 }
@@ -78,7 +79,7 @@ resource "aws_security_group" "firewall" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
+  // this is here only for testing! do not use it in production!!!
   ingress {
     from_port   = 22
     to_port     = 22
@@ -92,17 +93,16 @@ resource "aws_security_group" "firewall" {
 module "alb" {
   source  = "terraform-aws-modules/alb/aws"
   version = "~> 6.0"
-
-  name = "my-alb"
+  name    = "tikal-test-alb"
 
   load_balancer_type = "application"
 
-  vpc_id             = "vpc-abcde012"
-  subnets            = ["subnet-abcde012", "subnet-bcde012a"]
-  security_groups    = ["sg-edcd9784", "sg-edcd9785"]
+  vpc_id          = module.vpc.vpc_id
+  subnets         = [module.vpc.public_subnets[0], module.vpc.public_subnets[1]]
+  security_groups = [aws_security_group.firewall.id]
 
   access_logs = {
-    bucket = "my-alb-logs"
+    bucket = "tikal-test-logs"
   }
 
   target_groups = [
@@ -113,23 +113,14 @@ module "alb" {
       target_type      = "instance"
       targets = [
         {
-          target_id = "i-0123456789abcdefg"
-          port = 80
+          target_id = "${aws_instance.app_server[0].id}"
+          port      = 80
         },
         {
-          target_id = "i-a1b2c3d4e5f6g7h8i"
-          port = 8080
+          target_id = "${aws_instance.app_server[1].id}"
+          port      = 80
         }
       ]
-    }
-  ]
-
-  https_listeners = [
-    {
-      port               = 443
-      protocol           = "HTTPS"
-      certificate_arn    = "arn:aws:iam::123456789012:server-certificate/test_cert-123456789012"
-      target_group_index = 0
     }
   ]
 
@@ -142,8 +133,13 @@ module "alb" {
   ]
 
   tags = {
-    Environment = "Test"
+    Environment = var.env
+    terraform   = "true"
   }
 }
 
 
+resource "aws_s3_bucket" "log_bucket" {
+  bucket = "tikal-test-logs"
+  acl    = "public-read-write"
+}

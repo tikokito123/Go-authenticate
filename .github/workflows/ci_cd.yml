@@ -71,3 +71,22 @@ jobs:
       -
         name: Check out Repo
         uses: actions/checkout@v2
+     
+      - 
+        name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - 
+        name: Terraform
+        run: |
+          cd terraform
+          terraform fmt -check
+          terraform init
+          terraform validate -no-color
+          terraform plan -no-color
+          terraform apply -auto-approve
+
+
+  
