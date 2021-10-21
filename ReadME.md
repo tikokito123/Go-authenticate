@@ -52,6 +52,12 @@ Add the next secrets:
 3. create a .txt file and leave it empty for commiting a change...```git add.``` ```git commit -m "Hello-world"``` to the repo, ```git push```
 
 
+## deploy with your local machine
+
+To deploy the app with your local machine you will need terraform, and your AWS credentials!
+
+1. make sure you are in the terraform directory
+
 
 
 

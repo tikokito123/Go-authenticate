@@ -96,8 +96,9 @@ jobs:
         name: Terraform init
         id: init
         run: |
-          cd terraform   
+          cd terraform
           terraform init
+          ${AWS_ACCESS_KEY_ID}
 
       - 
         name: Terraform validate
