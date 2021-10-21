@@ -20,7 +20,7 @@ resource "tls_private_key" "private_key" {
 }
 
 resource "aws_key_pair" "key" {
-  key_name   = "keyPair${tls_private_key.private_key.id}"
+  key_name   = "keyPair${random_shuffle.az.result[1]}"
   public_key = tls_private_key.private_key.public_key_openssh
 }
 
@@ -80,20 +80,23 @@ resource "aws_security_group" "firewall" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   // this is here only for testing! do not use it in production!!!
-  // ingress {
-  //   from_port   = 22
-  //   to_port     = 22
-  //   protocol    = "tcp"
-  //   cidr_blocks = [0.0.0.0/0]
-  // }
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
 }
-
+resource "random_shuffle" "az" {
+  input        = ["alb", "tikal", "tikokito", "devops"]
+  result_count = 2
+}
 
 module "alb" {
   source  = "terraform-aws-modules/alb/aws"
   version = "~> 6.0"
-  name    = "tikal-test-alb"
+  name    = "alb${random_shuffle.az.result[0]}"
 
   load_balancer_type = "application"
 
