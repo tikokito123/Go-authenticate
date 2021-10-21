@@ -16,7 +16,7 @@ They have a load balancer who take cares of them.
 
 - terraform on your local machine if you want to test it locally
 
-- AWS account with credantioals, if you want the app running on your account
+- AWS account with credentials, if you want the app running on your account
 
 - github account
 
@@ -34,9 +34,9 @@ Add the next secrets:
  
 - ```DOCKER_HUB_ACCESS_TOKEN```=dockerhubAccessToken
 
-- ```AWS_ACCESS_KEY_ID```=Your AWS access key credantial!
+- ```AWS_ACCESS_KEY_ID```=Your AWS access key credentials!
 
-- ```AWS_SECRET_ACCESS_KEY```=Your AWS secret key credantial!
+- ```AWS_SECRET_ACCESS_KEY```=Your AWS secret key credentials!
 
 - ```MONGO_URL```= your Mongo Atlas...
 
@@ -53,7 +53,8 @@ Add the next secrets:
 
 
 
-#### side-note!!!
 
-I know you see a k8s file in the repo... please ignore it! It is not part of the application.
-although you can test it with minikube. 
+
+#### SIDENOTES!
+
+
