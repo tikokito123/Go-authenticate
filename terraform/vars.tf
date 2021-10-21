@@ -19,4 +19,6 @@ variable "env" {
   description = "the env you upload terraform with"
 }
 
-
+variable "bucket_name" {
+  default = "terraformwithcicd"
+}

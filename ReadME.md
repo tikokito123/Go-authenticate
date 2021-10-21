@@ -38,7 +38,7 @@ Add the next secrets:
 
 - ```AWS_SECRET_ACCESS_KEY```=Your AWS secret key credantial!
 
-- ```MONGO_URL```=your Mongo Atlas...
+- ```MONGO_URL```= your Mongo Atlas...
 
 - ```HOST```=0.0.0.0
 
