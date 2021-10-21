@@ -57,7 +57,7 @@ jobs:
       - name: Go unit testing
         run: |
           docker pull tikokito/go-backend:latest
-          docker run -it -p 80:80 --entrypoint sh tikokito/go-backend:latest
+          docker run -p 80:80 --entrypoint sh tikokito/go-backend:latest
           
           go test
   
