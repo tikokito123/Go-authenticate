@@ -26,7 +26,7 @@ resource "tls_private_key" "private_key" {
 }
 
 resource "aws_key_pair" "key" {
-  key_name   = "keyPair${random_shuffle.az.result[1]}"
+  key_name   = "keyPair"
   public_key = tls_private_key.private_key.public_key_openssh
 }
 
@@ -51,7 +51,7 @@ resource "aws_instance" "app_server" {
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
-  name = "my-vpc"
+  name = "tikal-mission-VPC"
   cidr = "10.128.0.0/16"
 
   azs            = ["${var.region}a", "${var.region}b", "${var.region}c"]
@@ -86,23 +86,19 @@ resource "aws_security_group" "firewall" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   // this is here only for testing! do not use it in production!!!
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+  // ingress {
+  //   from_port   = 22
+  //   to_port     = 22
+  //   protocol    = "tcp"
+  //   cidr_blocks = ["0.0.0.0/0"]
+  // }
 
-}
-resource "random_shuffle" "az" {
-  input        = ["alb", "tikal", "tikokito", "devops"]
-  result_count = 2
 }
 
 module "alb" {
   source  = "terraform-aws-modules/alb/aws"
   version = "~> 6.0"
-  name    = "alb${random_shuffle.az.result[0]}"
+  name    = "tikal-mission-alb"
 
   load_balancer_type = "application"
 
