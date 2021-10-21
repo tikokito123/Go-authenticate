@@ -52,6 +52,8 @@ module "vpc" {
   public_subnets = ["10.128.0.0/19", "10.128.32.0/19"]
 
   enable_nat_gateway = true
+  single_nat_gateway = true
+  
   enable_vpn_gateway = true
 
   tags = {
@@ -80,12 +82,12 @@ resource "aws_security_group" "firewall" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   // this is here only for testing! do not use it in production!!!
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+  // ingress {
+  //   from_port   = 22
+  //   to_port     = 22
+  //   protocol    = "tcp"
+  //   cidr_blocks = [0.0.0.0/0]
+  // }
 
 }
 

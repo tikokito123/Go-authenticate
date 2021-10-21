@@ -15,6 +15,7 @@ jobs:
     env:
       HOST: ${{ secrets.HOST }}
       PORT: ${{ secrets.PORT }}
+      JWT_TOKEN: ${{ secrets.JWT_TOKEN }}
       mongo_URL: ${{ secrets.MONGO_URL }}
     steps: 
     - 
@@ -71,8 +72,6 @@ jobs:
         PORT: ${{ secrets.PORT }}
         mongo_URL: ${{ secrets.MONGO_URL }}
         JWT_TOKEN: ${{ secrets.JWT_TOKEN }}
-        username: ${{ secrets.DOCKER_HUB_USERNAME }}
-        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       steps:
