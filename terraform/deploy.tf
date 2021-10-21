@@ -101,10 +101,6 @@ module "alb" {
   subnets         = [module.vpc.public_subnets[0], module.vpc.public_subnets[1]]
   security_groups = [aws_security_group.firewall.id]
 
-  access_logs = {
-    bucket = "tikal-test-logs"
-  }
-
   target_groups = [
     {
       name_prefix      = "pref-"
@@ -139,7 +135,3 @@ module "alb" {
 }
 
 
-resource "aws_s3_bucket" "log_bucket" {
-  bucket = "tikal-test-logs"
-  acl    = "public-read-write"
-}
