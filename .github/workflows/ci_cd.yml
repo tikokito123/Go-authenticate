@@ -58,6 +58,7 @@ jobs:
       - name: Go unit testing
         run: |
           pwd
+          ls -l
           go test
   
 
