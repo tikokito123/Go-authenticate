@@ -122,7 +122,7 @@ jobs:
         name: Terraform to ci/cd S3
         uses: jakejarvis/s3-sync-action@master
         env:
-          SOURCE_DIR: './src'
+          SOURCE_DIR: './terraform'
           AWS_REGION: 'us-east-2'
           AWS_S3_BUCKET: 'terraformwithcicd'
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
