@@ -20,5 +20,5 @@ variable "env" {
 }
 
 variable "bucket_name" {
-  default = "terraformwithcicd"
+  default = "terraform-with-ci-cd"
 }
