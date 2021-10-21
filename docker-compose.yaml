@@ -6,7 +6,7 @@ services:
     ports: 
       - "80:80"
     env_file: 
-      - ./server/.env.docker
+      - ./server/.env.dev
   mongo:
     image: mongo
     ports:
