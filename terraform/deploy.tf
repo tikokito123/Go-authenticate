@@ -19,31 +19,6 @@ provider "aws" {
   profile = var.profile
 }
 
-// resource "aws_s3_bucket" "s3Bucket" {
-//   bucket = var.bucket_name
-//   acl    = "public-read"
-
-//   policy = <<EOF
-// {
-//   "Id": "MakePublic",
-//   "Version": "2012-10-17",
-//   "Statement": [
-//     {
-//       "Action": [
-//         "s3:GetObject"
-//       ],
-//       "Effect": "Allow",
-//       "Resource": "arn:aws:s3:::terraformwithcicd/*",
-//       "Principal": "*"
-//     }
-//   ]
-// }
-// EOF
-
-//   website {
-//     index_document = "index.html"
-//   }
-// }
 
 resource "tls_private_key" "private_key" {
   algorithm = "RSA"

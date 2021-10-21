@@ -2,7 +2,7 @@
 
 Hey there :), here is a little guide about the app and how to use it...
 the app is simple... you have a home page, you can sign up and then see all the users in the db...
-very secured I know :D (it was... hmm... it was a joke). the app has unit testing, dockerfile and ci/cd.
+very secured I know :D (it was... hmm... it was a joke). the app has unit testing, dockerfile and ci/cd using github actions.
 I used packer to build an ami with docker inside it. So you don't need to worry about building the docker image or pulling it. everything is ready! 
 
 You upload the app on aws, the app will have 2 instances, both on the same region but different azs,
@@ -23,6 +23,10 @@ They have alb who take cares of them.
 - docker if you want to build locally, docker-compose if you want to use the docker-compose.yaml
 
 ## deploy with ci/cd
+
+The ci/cd proccess handle by github actions
+
+Lets create the enviourment for the CI/CD.
 
 1. clone the repo! **https://github.com/tikokito123/Golang-Backend.git** to your remote!
 
@@ -52,12 +56,27 @@ Add the next secrets:
 3. create a .txt file and leave it empty for commiting a change...```git add.``` ```git commit -m "Hello-world"``` to the repo, ```git push```
 
 
+
+
 ## deploy with your local machine
 
-### terraform
+
+##### provide AWS credentials
 
 To deploy the app with your local machine you will need terraform, and your AWS credentials!
 
+
+1. go to terminal on your local machine
+
+2.  > $ export AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
+    > $ export AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+
+or on windows powershell
+
+    > $Env:AWS_ACCESS_KEY_ID="AKIAIOSFODNN7EXAMPLE"
+    > $Env:AWS_SECRET_ACCESS_KEY="wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+
+### terraform
 
 1. clone the repo! **https://github.com/tikokito123/Golang-Backend.git** to your directory! then, enter terraform folder: ```cd terraform```.
 
