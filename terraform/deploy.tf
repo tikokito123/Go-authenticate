@@ -20,7 +20,7 @@ resource "tls_private_key" "private_key" {
 }
 
 resource "aws_key_pair" "key" {
-  key_name   = "webapp_tikal_test"
+  key_name   = "keyPair${tls_private_key.private_key.id}"
   public_key = tls_private_key.private_key.public_key_openssh
 }
 
