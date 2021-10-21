@@ -114,6 +114,6 @@ Great! we have an infrastructure on aws, and it is running! but... what if we do
 
 #### SIDENOTES!
 
-when the app in production, if you will take a look at the terraform folder, and then run-docker.sh, you will see that the app will connect to my mongoDb atlas. if you want to change it to your mongodb you can, although remember it is not safe to put the mongo_URL like that without a vault, I acknowledge the problem.
+when the app in production, if you will take a look at the terraform folder, and then run-docker.sh, you will see that the app will connect to my mongoDb atlas. if you want to change it to your mongodb you can, although remember it is not safe to put the mongo_URL like that without a vault, I acknowledge the problem...
 
 
