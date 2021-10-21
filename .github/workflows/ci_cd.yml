@@ -45,6 +45,7 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    container: tikokito/go-backend:latest
     env:
       HOST: ${{ secrets.HOST }}
       PORT: ${{ secrets.PORT }}
@@ -56,9 +57,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Go unit testing
         run: |
-          docker pull tikokito/go-backend:latest
-          docker run -p 80:80 --entrypoint sh tikokito/go-backend:latest
-          
+          pwd
           go test
   
 
