@@ -30,23 +30,23 @@ They have a load balancer who take cares of them.
 
 Add the next secrets:
 
-- DOCKER_HUB_USERNAME=dockerhubUsername
+- ```DOCKER_HUB_USERNAME```=dockerhubUsername
  
-- DOCKER_HUB_ACCESS_TOKEN=dockerhubAccessToken
+- ```DOCKER_HUB_ACCESS_TOKEN```=dockerhubAccessToken
 
-- AWS_ACCESS_KEY_ID=Your AWS access key credantial!
+- ```AWS_ACCESS_KEY_ID```=Your AWS access key credantial!
 
-- AWS_SECRET_ACCESS_KEY=Your AWS secret key credantial!
+- ```AWS_SECRET_ACCESS_KEY```=Your AWS secret key credantial!
 
-- MONGO_URL=your Mongo Atlas...
+- ```MONGO_URL```=your Mongo Atlas...
 
-- HOST=0.0.0.0
+- ```HOST```=0.0.0.0
 
-- PORT=80
+- ```PORT```=80
 
-- JWT_TOKEN=JWT_This_ISS_MYyy_PAsSword
+- ```JWT_TOKEN```=JWT_This_ISS_MYyy_PAsSword
 
-- TF_API_TOKEN=your terraform clound
+- ```TF_API_TOKEN```=your terraform clound
 
 
 3. create a .txt file and leave it empty for commiting a change...```git add.``` ```git commit -m "Hello-world"``` to the repo, ```git push```

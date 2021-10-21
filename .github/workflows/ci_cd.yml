@@ -93,7 +93,6 @@ jobs:
           terraform init
           terraform validate -no-color
           terraform plan -no-color
-          terraform destroy -var 'region=us-east-2'
           terraform apply -auto-approve
 
 
