@@ -94,6 +94,7 @@ jobs:
           terraform init
           terraform validate -no-color
           terraform plan -no-color
+          terraform destroy -auto-approve
           terraform apply -auto-approve
 
 
