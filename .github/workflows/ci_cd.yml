@@ -57,8 +57,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Go unit testing
         run: |
-          pwd
-          ls -l
+          cd server
           go test
   
 
