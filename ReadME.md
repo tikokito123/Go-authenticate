@@ -6,7 +6,7 @@ very secured I know :D (it was... hmm... it was a joke). the app has unit testin
 I used packer to build an ami with docker inside it. So you don't need to worry about building the docker image or pulling it. everything is ready! 
 
 You upload the app on aws, the app will have 2 instances, both on the same region but different azs,
-They have alb who take cares of them.
+They have alb.
 
 ## Guide to deploy on AWS
 
@@ -68,8 +68,8 @@ To deploy the app with your local machine you will need terraform, and your AWS 
 
 1. go to terminal on your local machine
 
-2.  > $ export AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
-    > $ export AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+2.  > $export AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
+    > $export AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 
 or on windows powershell
 
@@ -78,19 +78,19 @@ or on windows powershell
 
 ### terraform
 
-1. clone the repo! **https://github.com/tikokito123/Golang-Backend.git** to your directory! then, enter terraform folder: ```cd terraform```.
+1. clone the repo! **https://github.com/tikokito123/Golang-Backend.git** to your directory! then, go to the terraform folder: ```cd terraform```.
 
 2. Run the command, ```terraform validate``` and ```terraform fmt .``` to check if everything is in place
 
 3. Great! let's look at the vars.tf file,
-first, where are you from? suggest you put the region you want to work with! Because it is free tier you can only use 3 tiers. Well, That what amazon told me. so on default it is ```us-east-2```, but you can change it to whatever you want. You also want to config your profile to fit, and your s3 service. PLEASE NOTE!!! you also need to change the s3 service name manually on ```terraform block``` inside ```backend```! 
+first, where are you from? suggest you put the region you want to work with! Because it is free tier you can only use 3 tiers. Well, That what amazon told me. so on default it is 
+```us-east-2```,but you can change it to whatever you want. You also want to config your profile to fit, and your s3 service. PLEASE NOTE!!! you also need to change the s3 service name manually on ```terraform block``` inside ```backend```! 
 
 4. Run the command, ```terraform init```, he will ask you for a aws access key, pass it through the console. you can also run the command ```terraform init -backend-config="key=${AWS_ACCESS_KEY_ID}"```. It's so it will have access to the console.
 
-5. And now, the moment we all waiting for!! DRUMS~~~!!~!! ```terraform apply``` :O :O :O :O.
-upload the terraform infrastructure to your cloud.
+5. ```terraform apply``` upload the terraform infrastructure to your cloud.
 
-6. go to your aws ui, click on `ec2` --> `load balancers`. found the load balancer. Coppy the DNS name. paste it and you are in!
+6. go to your aws ui, click on `ec2` --> `load balancers`. found the load balancer. Coppy the DNS name. paste and you are in!
 
 > Please make sure you have access to the s3 backend service.
 
@@ -133,6 +133,6 @@ Great! we have an infrastructure on aws, and it is running! but... what if we do
 
 #### SIDENOTES!
 
-when the app in production, if you will take a look at the terraform folder, and then run-docker.sh, you will see that the app will connect to my mongoDb atlas. if you want to change it to your mongodb you can, although remember it is not safe to put the mongo_URL like that without a vault, I acknowledge the problem...
+when the app is in production/upload with terraform, if you will take a look at the terraform folder, and then run-docker.sh, you will see that the app will connect to my mongoDb atlas. if you want to change it to your mongodb you can, although remember it is not safe to put the mongo_URL like that without a vault, I acknowledge the problem...
 
 
