@@ -9,7 +9,7 @@ secret.json
 #terraform
 
 terraform/*
-
-!*vars.tf
-!*aws.tf
+!outputs.tf
+!*vars.t
+!deploy.tf
 !run-docker.sh

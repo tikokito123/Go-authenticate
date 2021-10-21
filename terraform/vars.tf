@@ -1,17 +1,22 @@
-variable "region"{
-  default = "eu-central-1"
+variable "region" {
+  default = "us-east-2"
 }
 
 variable "exec-sh-path" {
-    default = "./run-docker.sh"
+  default = "./run-docker.sh"
 }
 
 variable "ami" {
-    default = "ami-017989ecf53fd51ce"
+  default = "ami-0c544fb1ed26c3b00"
 }
 
 variable "profile" {
-    default = "TIKOKITO"
+  default = "Amir"
+}
+
+variable "env" {
+  default     = "production"
+  description = "the env you upload terraform with"
 }
 
 
