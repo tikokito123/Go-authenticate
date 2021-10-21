@@ -49,7 +49,7 @@ Add the next secrets:
 - TF_API_TOKEN=your terraform clound
 
 
-3. ```git commit -m "Hello-world"``` to the repo, ```git push```
+3. create a .txt file and leave it empty for commiting a change...```git add.``` ```git commit -m "Hello-world"``` to the repo, ```git push```
 
 
 

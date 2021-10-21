@@ -52,8 +52,6 @@ module "vpc" {
   public_subnets = ["10.128.0.0/19", "10.128.32.0/19"]
 
   enable_nat_gateway = true
-  single_nat_gateway = true
-
   enable_vpn_gateway = true
 
   tags = {
