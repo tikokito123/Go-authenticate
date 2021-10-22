@@ -5,10 +5,12 @@ services:
     build: .
     ports: 
       - "80:80"
-    environment:
-      HOST=0.0.0.0
-      PORT=80
-      mongo_URL=mongo_URL=mongodb://host.docker.internal:27017/Golang
+    environment: 
+      HOST: 0.0.0.0
+      PORT: 80
+      mongo_URL: mongo_URL=mongodb://host.docker.internal:27017/Golang
+      JWT_TOKEN: someToeknToKeepInSecret
+    
   mongo:
     image: mongo
     ports:
