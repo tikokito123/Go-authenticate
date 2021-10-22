@@ -9,6 +9,7 @@ terraform {
   backend "s3" {
     bucket = "terraform-with-ci-cd"
     region = "us-east-2"
+    key = ".terraform/terraform.tfsafe"
   }
 
   required_version = ">= 0.14.9"
