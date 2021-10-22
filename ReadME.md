@@ -80,13 +80,15 @@ or on windows powershell
 
 1. clone the repo! **https://github.com/tikokito123/Golang-Backend.git** to your directory! then, go to the terraform folder: ```cd terraform```.
 
-2. Run the command, ```terraform validate``` and ```terraform fmt .``` to check if everything is in place
 
-3. Great! let's look at the vars.tf file,
+2. Great! let's look at the vars.tf file,
 first, where are you from? suggest you put the region you want to work with! Because it is free tier you can only use 3 tiers. Well, That what amazon told me. so on default it is 
 ```us-east-2```,but you can change it to whatever you want. You also want to config your profile to fit, and your s3 service. PLEASE NOTE!!! you also need to change the s3 service name manually on ```terraform block``` inside ```backend```! 
 
-4. Run the command, ```terraform init```, he will ask you for a aws access key, pass it through the console. you can also run the command ```terraform init -backend-config="key=${AWS_ACCESS_KEY_ID}"```. It's so it will have access to the console.
+3. Run the command, ```terraform init```, if he will ask from you a key, pass the access key through the console. you can also run the command ```terraform init -backend-config="key=${AWS_ACCESS_KEY_ID}"```.
+
+4. Run the command, ```terraform validate``` and ```terraform fmt .``` to check if everything is in place
+
 
 5. ```terraform apply``` upload the terraform infrastructure to your cloud.
 
