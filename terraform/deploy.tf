@@ -21,33 +21,6 @@ provider "aws" {
 }
 
 
-// resource "tls_private_key" "private_key" {
-//   algorithm = "RSA"
-//   rsa_bits  = 4096
-// }
-
-// resource "aws_key_pair" "key" {
-//   key_name   = "keyPair"
-//   public_key = tls_private_key.private_key.public_key_openssh
-// }
-
-// resource "aws_instance" "app_server" {
-//   ami                    = var.ami
-//   instance_type          = "t2.micro"
-//   count                  = 2
-//   subnet_id              = element(module.vpc.public_subnets, count.index)
-//   key_name               = aws_key_pair.key.key_name
-//   user_data              = file("./run-docker.sh")
-//   vpc_security_group_ids = ["${aws_security_group.firewall.id}"]
-
-//   tags = {
-//     Name      = "TikalTestServerInstance"
-//     Terraform = "true"
-//     ENV       = var.env
-//   }
-
-// }
-
 
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
@@ -87,12 +60,12 @@ resource "aws_security_group" "firewall" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   // this is here only for testing! do not use it in production!!!
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+  // ingress {
+  //   from_port   = 22
+  //   to_port     = 22
+  //   protocol    = "tcp"
+  //   cidr_blocks = ["0.0.0.0/0"]
+  // }
 
 }
 
@@ -153,51 +126,3 @@ resource "aws_elb" "web_elb" {
   }
 
 }
-
-
-
-// module "alb" {
-//   source  = "terraform-aws-modules/alb/aws"
-//   version = "~> 6.0"
-//   name    = "tikal-mission-alb"
-
-//   load_balancer_type = "application"
-
-//   vpc_id          = module.vpc.vpc_id
-//   subnets         = [module.vpc.public_subnets[0], module.vpc.public_subnets[1]]
-//   security_groups = [aws_security_group.firewall.id]
-
-//   target_groups = [
-//     {
-//       name_prefix      = "pref-"
-//       backend_protocol = "HTTP"
-//       backend_port     = 80
-//       target_type      = "instance"
-//       targets = [
-//         {
-//           target_id = "${aws_instance.app_server[0].id}"
-//           port      = 80
-//         },
-//         {
-//           target_id = "${aws_instance.app_server[1].id}"
-//           port      = 80
-//         }
-//       ]
-//     }
-//   ]
-
-//   http_tcp_listeners = [
-//     {
-//       port               = 80
-//       protocol           = "HTTP"
-//       target_group_index = 0
-//     }
-//   ]
-
-//   tags = {
-//     Environment = var.env
-//     terraform   = "true"
-//   }
-// }
-
-
