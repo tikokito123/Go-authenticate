@@ -91,7 +91,7 @@ resource "aws_launch_configuration" "web" {
   security_groups             = [aws_security_group.firewall.id]
   associate_public_ip_address = true
 
-  user_data = "${filebase64("./run-docker.sh")}"
+  user_data = filebase64("./run-docker.sh")
 
   lifecycle {
     create_before_destroy = true
