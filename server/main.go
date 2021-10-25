@@ -53,7 +53,7 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 }
 
 func signInPage(w http.ResponseWriter, r *http.Request) {
-	fp := path.Join("templates", "signInPage.html")
+	fp := path.Join("templates", "SignInPage.html")
 
 	tmpl, err := template.ParseFiles(fp)
 	if err != nil {
