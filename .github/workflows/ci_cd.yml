@@ -118,15 +118,7 @@ jobs:
           cd terraform
           terraform apply -auto-approve
 
-      - 
-        name: Terraform to ci/cd S3
-        uses: jakejarvis/s3-sync-action@master
-        env:
-          SOURCE_DIR: './terraform'
-          AWS_REGION: 'us-east-2'
-          AWS_S3_BUCKET: 'terraform-with-ci-cd'
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    
 
 
   
