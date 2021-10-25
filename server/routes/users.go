@@ -3,6 +3,7 @@ package routes
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -105,20 +106,55 @@ func CreateNewUser(w http.ResponseWriter, r *http.Request) {
 	}
 	logrus.Info(result)
 
-	tokenString, err := GenerateToken(user.Username)
-
-	r.AddCookie(&http.Cookie{
-		Name:     "jwt",
-		Value:    tokenString,
-		HttpOnly: true,
-		MaxAge:   0,
-	})
-
+	token, err := GenerateToken(user.Username)
 	if err != nil {
 		log.Print("error")
 		logrus.Error("could not generate token", err.Error())
 		return
 	}
+	cookie := http.Cookie{
+		Name:   "jwt",
+		Value:  token,
+		MaxAge: 0,
+	}
+	http.SetCookie(w, &cookie)
+
+	http.Redirect(w, r, "/users/", http.StatusMovedPermanently)
+}
+
+func SignInUser(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("content-type", "application/json")
+
+	var user User
+
+	r.ParseForm()
+
+	username := r.FormValue("username")
+	password := r.FormValue("password")
+
+	client, _ = database.GetMongoClient()
+
+	collection := client.Database(database.DB).Collection(database.Collection_users)
+
+	if err := collection.FindOne(context.Background(), bson.M{"username": username}).Decode(&user); err != nil {
+		logrus.Error(err.Error())
+		fmt.Fprintln(w, "username or passwod are not mutch!")
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
+		logrus.Error("password not mutch")
+		fmt.Fprintln(w, "username or passwod are not mutch!")
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	token, _ := GenerateToken(user.Username)
+
+	cookie := http.Cookie{Name: "jwt", Value: token, MaxAge: 0}
+	http.SetCookie(w, &cookie)
+
 	http.Redirect(w, r, "/users/", http.StatusMovedPermanently)
 }
 

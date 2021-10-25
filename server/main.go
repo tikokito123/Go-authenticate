@@ -23,8 +23,10 @@ func handleRequests() {
 
 	//users
 	users.HandleFunc("/create", routes.CreateNewUser).Methods("POST")
+	users.HandleFunc("/sign-in", routes.SignInUser).Methods("POST")
 	//users.HandleFunc("/{id}", routes.GetUser).Methods("GET")
 	users.HandleFunc("/", routes.GetUsers).Methods("GET")
+	users.HandleFunc("/sign-in", signInPage).Methods("GET")
 	//listen
 	if err := http.ListenAndServe(os.Getenv("HOST")+":"+os.Getenv("PORT"), router); err != nil {
 		logrus.Error("could not listen and serve: ", err.Error())
@@ -35,6 +37,23 @@ func handleRequests() {
 
 func homePage(w http.ResponseWriter, r *http.Request) {
 	fp := path.Join("templates", "index.html")
+
+	tmpl, err := template.ParseFiles(fp)
+	if err != nil {
+		logrus.Error(err.Error())
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if err := tmpl.Execute(w, "Here I am"); err != nil {
+		logrus.Error(err.Error())
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
+func signInPage(w http.ResponseWriter, r *http.Request) {
+	fp := path.Join("templates", "signInPage.html")
 
 	tmpl, err := template.ParseFiles(fp)
 	if err != nil {
