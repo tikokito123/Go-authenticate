@@ -23,6 +23,8 @@ var client *mongo.Client
 
 type User struct {
 	ID       primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
+	Email    string             `json:"email" bson:"email,omitempty"`
+	Date     time.Time          `json:"date" bson:"date"`
 	Username string             `json:"username" bson:"username,omitempty"`
 	Password string             `json:"password" bson:"password,omitempty"`
 }
@@ -65,20 +67,30 @@ func CreateNewUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("content-type", "application/json")
 
 	var user User
-
+	// layout := "01/02 03:04:05PM '06 -0700"
 	r.ParseForm()
 
-	user.Username = r.FormValue("username")
-	user.Password = r.FormValue("password")
+	// user.Email = r.FormValue("email")
+	// user.Username = r.FormValue("username")
+	// user.Password = r.FormValue("password")
+	// birth, err := time.Parse(layout, r.FormValue("date"))
+	// if err != nil {
+	// 	w.WriteHeader(http.StatusBadRequest)
+	// 	logrus.Error(err.Error())
+	// 	return
+	// }
+	// user.Date = birth
+	// logrus.Info(user.Date)
 
-	/*if you want to use postman, use this line of code
+	//if you want to use postman, use this line of code
 
 	if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		logrus.Error(err.Error())
 		return
 	}
-	*/
+
+	logrus.Info(user)
 
 	client, err := database.GetMongoClient()
 	if err != nil {

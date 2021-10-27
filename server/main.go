@@ -9,7 +9,6 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
-	"github.com/tikokito123/main/middleware"
 	"github.com/tikokito123/main/routes"
 )
 
@@ -21,7 +20,6 @@ func handleRequests() {
 
 	//gets
 	router.HandleFunc("/", homePage).Methods("GET")
-	router.HandleFunc("/auth", authPage).Subrouter().Use(middleware.Authenticate)
 	//users
 	users.HandleFunc("/create", routes.CreateNewUser).Methods("POST")
 	users.HandleFunc("/sign-in", routes.SignInUser).Methods("POST")
