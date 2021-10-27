@@ -16,15 +16,23 @@ func handleRequests() {
 	router := mux.NewRouter()
 	//subroutersc
 	users := router.PathPrefix("/users").Subrouter()
+	auth := router.PathPrefix("/auth").Subrouter()
 	//middlewares
+	auth.Use(middleware.Authenticate)
 
-	//gets
 	router.HandleFunc("/", homePage).Methods("GET")
+<<<<<<< HEAD
+=======
+	auth.HandleFunc("/", authPage).Methods("GET")
+
+>>>>>>> 6bf55322396bc1f2bcb4dfb3c659fd83ce6d983b
 	//users
 	users.HandleFunc("/create", routes.CreateNewUser).Methods("POST")
 	users.HandleFunc("/sign-in", routes.SignInUser).Methods("POST")
+
 	//users.HandleFunc("/{id}", routes.GetUser).Methods("GET")
 	users.HandleFunc("/", routes.GetUsers).Methods("GET")
+	users.HandleFunc("/sign-in", signInPage).Methods("GET")
 	//listen
 	if err := http.ListenAndServe(os.Getenv("HOST")+":"+os.Getenv("PORT"), router); err != nil {
 		logrus.Error("could not listen and serve: ", err.Error())

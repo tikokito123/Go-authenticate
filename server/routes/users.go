@@ -156,7 +156,7 @@ func SignInUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
-		logrus.Error("password not mutch")
+		logrus.Error("username or password are not mutch")
 		fmt.Fprintln(w, "username or passwod are not mutch!")
 		w.WriteHeader(http.StatusBadRequest)
 		return
@@ -164,10 +164,10 @@ func SignInUser(w http.ResponseWriter, r *http.Request) {
 
 	token, _ := GenerateToken(user.Username)
 
-	cookie := http.Cookie{Name: "jwt", Value: token, MaxAge: 0}
+	cookie := http.Cookie{Name: "jwt", Value: token, MaxAge: 0, Path: "/"}
 	http.SetCookie(w, &cookie)
 
-	http.Redirect(w, r, "/users/", http.StatusMovedPermanently)
+	http.Redirect(w, r, "/auth/", http.StatusMovedPermanently)
 }
 
 func GetUsers(w http.ResponseWriter, r *http.Request) {
@@ -214,10 +214,11 @@ func GenerateToken(username string) (string, error) {
 	claims["exp"] = time.Now().Add(time.Minute * 30).Unix()
 
 	tokenString, err := token.SignedString(jwt_key)
-
+	logrus.Info(tokenString)
 	if err != nil {
 		logrus.Error("something went wrong", err.Error())
 		return "", err
 	}
+
 	return tokenString, nil
 }

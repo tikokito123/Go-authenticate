@@ -9,6 +9,8 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+var tokenKey = []byte(os.Getenv("JWT_TOKEN"))
+
 func Authenticate(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		cookie, err := r.Cookie("jwt")
@@ -24,7 +26,7 @@ func Authenticate(next http.Handler) http.Handler {
 				logrus.Error("something went wrong on jwt auth middleware")
 				return nil, fmt.Errorf("there was an error")
 			}
-			return os.Getenv("JWT_TOKEN"), nil
+			return tokenKey, nil
 		})
 		if err != nil {
 			logrus.Error(err.Error())
