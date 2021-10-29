@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"os"
@@ -40,6 +41,8 @@ func Authenticate(next http.Handler) http.Handler {
 			fmt.Fprintf(w, "Not Authorized")
 		}
 
+		ctx := context.WithValue(r.Context(), token, token.Raw)
+		r = r.WithContext(ctx)
 		next.ServeHTTP(w, r)
 	})
 }

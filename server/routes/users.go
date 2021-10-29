@@ -12,6 +12,7 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/gorilla/mux"
 	"github.com/sirupsen/logrus"
+	models "github.com/tikokito123/main/Models"
 	"github.com/tikokito123/main/database"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -20,14 +21,6 @@ import (
 )
 
 var client *mongo.Client
-
-type User struct {
-	ID       primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
-	Email    string             `json:"email" bson:"email,omitempty"`
-	Date     time.Time          `json:"date" bson:"date"`
-	Username string             `json:"username" bson:"username,omitempty"`
-	Password string             `json:"password" bson:"password,omitempty"`
-}
 
 func HashPassword(password string) (string, error) {
 	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.MinCost)
@@ -43,7 +36,7 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 
 	id, _ := primitive.ObjectIDFromHex(params["id"])
-	var user User
+	var user models.User
 
 	client, _ = database.GetMongoClient()
 
@@ -53,7 +46,7 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 
 	defer cancle()
 
-	err := collection.FindOne(ctx, User{ID: id}).Decode(&user)
+	err := collection.FindOne(ctx, models.User{ID: id}).Decode(&user)
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -66,7 +59,7 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 func CreateNewUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("content-type", "application/json")
 
-	var user User
+	var user models.User
 	// layout := "01/02 03:04:05PM '06 -0700"
 	r.ParseForm()
 
@@ -137,7 +130,7 @@ func CreateNewUser(w http.ResponseWriter, r *http.Request) {
 func SignInUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("content-type", "application/json")
 
-	var user User
+	var user models.User
 
 	r.ParseForm()
 
@@ -172,7 +165,7 @@ func SignInUser(w http.ResponseWriter, r *http.Request) {
 
 func GetUsers(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("content-type", "application/json")
-	var users []User
+	var users []models.User
 
 	client, _ = database.GetMongoClient()
 
@@ -189,7 +182,7 @@ func GetUsers(w http.ResponseWriter, r *http.Request) {
 	}
 	defer cursor.Close(ctx)
 	for cursor.Next(ctx) {
-		var user User
+		var user models.User
 		cursor.Decode(&user)
 		users = append(users, user)
 	}

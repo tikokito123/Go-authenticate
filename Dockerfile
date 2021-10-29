@@ -1,3 +1,14 @@
+FROM node:alpine as Client
+WORKDIR /usr/app
+
+COPY ./client/package.json .
+RUN npm install
+COPY ./client .
+RUN  npm run build
+
+
+
+
 FROM golang:alpine
 WORKDIR /usr/app
 
@@ -11,6 +22,8 @@ RUN go mod download
 COPY server ./
 
 RUN go build -o run-server .
+
+COPY --from=Client ./build /usr/app/build
 
 EXPOSE 80
 

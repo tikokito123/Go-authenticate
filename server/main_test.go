@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
@@ -55,7 +56,7 @@ func TestInstertData(t *testing.T) {
 
 	collection := client.Database(database.DB).Collection(database.Collection_tests)
 
-	res, err := collection.InsertOne(context.Background(), models.User{id, "user_test", hash})
+	res, err := collection.InsertOne(context.Background(), models.User{id, "testemail@gmail.com", time.Now(), "user_test", hash, false})
 
 	if err != nil {
 		logrus.Error(err.Error())

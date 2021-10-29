@@ -1,34 +1,62 @@
 import React, { Component } from "react";
 import { Modal, Form, Button } from "react-bootstrap";
+import * as yup from 'yup'
 import DatePicker from 'react-datepicker'
 
 import "react-datepicker/dist/react-datepicker.css";
 
 class Signup extends React.Component {
   state = {
-    show: true,
+    show: false,
     date: new Date()
   };
+
+
+
+  schema = yup.object().shape({
+    username: yup.string().required('please enter a username!').min(6, "password must be longer than 6 characters!"),
+    password: yup.string().required("please provide a valid password"),
+    email: yup.string().email(),
+    birth: yup.date().required(),
+  });
 
   handleShow = () => this.setState({ show: true });
   handleClose = () => this.setState({ show: false });
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    const {password, confirmPassword} = this.state;
-
+    const {password, confirmPassword, username, email, date} = this.state;
     if(confirmPassword !== password) return alert("password do not mutch!");
+    const user = {
+      username,
+      email,
+      password,
+      confirmPassword,
+      date
+    }
+    
+    const userSchema = yup.object().shape({
+      username: yup.string().required(),
+      email: yup.string().required().email(),
+      password: yup.string().required().min(6, "characters must have at least 6 chars"),
+      confirmPassword: yup.string().required(),
+      date: yup.date().required()
+    })
 
-    console.log(this.state);
+    const isValid = await userSchema.isValid(user);
+    if (!isValid) return alert("You didn't fill the fields as required!")
+
     const res = await fetch("/users/create", {
       method: "POST",
-      headers: {},
+      headers: {
+        "content-type": "application/json"
+      },
       body: JSON.stringify(this.state),
     });
     const json = await res.json();
     console.log(json);
   };
-
+  
   HandleChange = e => {
       e.preventDefault();
       this.setState({[e.target.name]: e.target.value})
@@ -86,7 +114,10 @@ class Signup extends React.Component {
       </Modal>
     )
     return (
-      <div>{signUp}</div>
+      <div>
+         <Button onClick={this.handleShow} variant="light" className="m-4">Sign up!</Button>
+         {signUp}
+      </div>
     );
   }
 }
