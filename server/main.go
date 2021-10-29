@@ -18,7 +18,7 @@ func handleRequests() {
 	//subroutersc
 	users := router.PathPrefix("/users").Subrouter()
 	auth := router.PathPrefix("/auth").Subrouter()
-	//middlewares
+	//middlewares athunticate
 	auth.Use(middleware.Authenticate)
 
 	router.HandleFunc("/", homePage).Methods("GET")

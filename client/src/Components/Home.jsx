@@ -7,8 +7,8 @@ class Home extends React.Component {
         <Container className="mt-5 bg-secondary text-dark">
           <h1 className="p-3">TikoWeb</h1>
           <Row>
-            <Col xs={12} md={8}> 
-              <p className="m-3">
+            <Col xs={12} md={12}> 
+              <p className="m-3 display-3">
                 this is some Info about tikoWeb Lorem ipsum, dolor sit amet
                 consectetur adipisicing elit. Ipsam quaerat incidunt facilis
                 fugit molestias dolorum nemo provident assumenda asperiores

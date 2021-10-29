@@ -91,7 +91,7 @@ class Signin extends React.Component {
           </Form>
           <Button
             onClick={this.handleClose}
-            className="mt-2 dark"
+            className="mt-2 bg-warning"
           >
             not a user? create an account
           </Button>
