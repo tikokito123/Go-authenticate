@@ -4,11 +4,11 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        <Container className="mt-5 bg-secondary text-dark">
-          <h1 className="p-3">TikoWeb</h1>
+        <Container className="mt-5 text-dark" >
+          <h1 className="display-2 text-center">TikoWeb</h1>
           <Row>
             <Col xs={12} md={12}> 
-              <p className="m-3 display-3">
+              <p className="m-3 display-6">
                 this is some Info about tikoWeb Lorem ipsum, dolor sit amet
                 consectetur adipisicing elit. Ipsam quaerat incidunt facilis
                 fugit molestias dolorum nemo provident assumenda asperiores

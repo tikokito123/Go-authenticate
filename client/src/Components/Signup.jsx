@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Modal, Form, Button } from "react-bootstrap";
 import * as yup from 'yup'
 import DatePicker from 'react-datepicker'

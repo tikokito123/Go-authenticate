@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import * as yup from "yup";
 import { Modal, Form, Button } from "react-bootstrap";
 class Signin extends React.Component {
