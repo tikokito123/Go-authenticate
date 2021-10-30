@@ -1,4 +1,34 @@
-.users {
-    margin: auto;
-    align-items: center;
+body {
+  object-fit: cover;
+  max-width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background: url("../../images/backround.jpeg");
+  background-size: cover;
+}
+* {
+  box-sizing: border-box;
+}
+
+
+#sidebar {
+    align-items: stretch;
+    position: relative;
+    height: 100vh;
+    top: 8%; 
+    bottom: 0;
+    float: left;
+    z-index: 0;
+    align-items: stretch;
+}
+
+.wrapper {
+    width: 100%;
+    align-items: stretch;
+}
+
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -250px;
+    }
 }

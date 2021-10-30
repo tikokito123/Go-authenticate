@@ -1,13 +1,12 @@
-import Button from "@restart/ui/esm/Button";
 import React from "react";
-import {Toast, ToastContainer} from 'react-bootstrap'
+import { Container, Toast, ToastContainer, Button } from "react-bootstrap";
 class EnterChat extends React.Component {
   render() {
     return (
-      <div>
-        <ToastContainer>
-          <Toast>
-            <Toast.Header>
+      <Container className="text-center">
+        <ToastContainer className="p-5 ml-5">
+          <Toast className="mb-5">
+            <Toast.Header closeButton={false}>
               <img
                 src="holder.js/20x20?text=%20"
                 className="rounded me-2"
@@ -19,7 +18,7 @@ class EnterChat extends React.Component {
             <Toast.Body>See? Just like this.</Toast.Body>
           </Toast>
           <Toast>
-            <Toast.Header>
+            <Toast.Header closeButton={false}>
               <img
                 src="holder.js/20x20?text=%20"
                 className="rounded me-2"
@@ -28,11 +27,11 @@ class EnterChat extends React.Component {
               <strong className="me-auto">Bootstrap</strong>
               <small className="text-muted">2 seconds ago</small>
             </Toast.Header>
-            <Toast.Body>Heads up, toasts will stack automatically</Toast.Body>
+            <Toast.Body>Why is it just me?</Toast.Body>
           </Toast>
-            <Button>Connect To Chat</Button>
         </ToastContainer>
-      </div>
+        <Button variant="outline-dark" className="mt-5 text-danger border border-dark outline-primary" size="lg" href="/chat">Connect To Chat</Button>
+      </Container>
     );
   }
 }

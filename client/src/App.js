@@ -7,14 +7,17 @@ import {
 import Chat from "./Components/Chat";
 import EnterChat from "./Components/EnterChat";
 import Home from "./Components/Home";
-import SideBar from "./Components/NavBar";
+import SideBar from "./Components/SideBar";
+import NavBar from './Components/NavBar'; 
 import NotFound from "./Components/NotFound";
 import Register from "./Components/User";
+import './Components/css/main.css'
 
 function App() {
   return (
-    <div className="App">
+    <div >
       <Router>
+        <NavBar />
         <SideBar />
         <Switch>
           <Route component={Register} path="/register" />

@@ -16,22 +16,22 @@ class Signin extends React.Component {
     e.preventDefault();
 
     const userSchema = yup.object().shape({
-      username: yup
+      email: yup
         .string()
-        .required("Please enter a valid username")
-        .min("must have at least 6 letters"),
+        .email()
+        .required("Please enter a valid username"),
       password: yup
         .string()
         .required("please enter a password")
-        .min("password must contain at least 6 characters"),
+        .min(6, "password must contain at least 6 characters"),
     });
 
-    const { username, password } = this.state;
+    const { email, password } = this.state;
     const user = {
-      username,
+      email,
       password,
     };
-
+    console.log(user);
     const isValid = await userSchema.isValid(user);
 
     if (!isValid) return alert("please enter a valid params");
@@ -63,7 +63,7 @@ class Signin extends React.Component {
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
               <Form.Control
-                name="emai"
+                name="email"
                 type="email"
                 placeholder="Enter email"
                 onChange={this.HandleChange}
