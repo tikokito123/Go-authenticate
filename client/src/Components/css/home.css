@@ -1,0 +1,12 @@
+section {
+    color: white;
+    font-weight: 900;
+    position: relative;
+    overflow: auto;
+    font-size: 1.35rem;
+    line-height: 2.6rem;
+    padding: 33rem;
+    align-items: center;
+    left: 5%; 
+    height: 300px;
+}
