@@ -80,7 +80,7 @@ class Chat extends React.Component {
               </Col>
             </Row>
                 </SimpleBar>
-            <Form>
+            <Form onSubmit={this.handleSubmit}>
               <InputGroup className="mb-2 mt-5">
                 <FormControl
                   name="message"
@@ -88,7 +88,7 @@ class Chat extends React.Component {
                   placeholder="message text"
                 />
                 <InputGroup.Text>
-                  <Button variant="outline-success" onClick={this.handleSubmit}>
+                  <Button variant="outline-success" type="submit">
                     Send
                   </Button>
                 </InputGroup.Text>

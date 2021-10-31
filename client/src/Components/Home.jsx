@@ -13,7 +13,7 @@ class Home extends React.Component {
       <Container className="pt-5 m-auto">
         <Button
           id="home-button"
-          className="d-flex m-auto text-center"
+          className="d-flex m-auto text-center p-5"
           variant="outline-dark"
           onClick={() => this.setState({ open: !this.state.open })}
           aria-controls="example-collapse-text"
@@ -28,9 +28,11 @@ class Home extends React.Component {
                 body
                 style={{
                   color: "black",
-                  width: "500px",
+                  width: "50rem",
                   border: "solid 3px black",
                   borderRadius: "15px",
+                  fontSize: "1.6rem",
+                  lineHeight: "1.6",
                 }}
               >
                 <SimpleBar style={{ maxHeight: "50vh" }}>
@@ -50,30 +52,34 @@ class Home extends React.Component {
                   sapiente ea proident. Anim pariatur cliche reprehenderit, enim
                   eiusmod high life accusamus terry richardson ad squid. Nihil
                   anim keffiyeh helvetica, craft beer labore wes anderson cred
+                  nesciunt sapiente ea proident. a proident. Anim pariatur
+                  cliche reprehenderit, enim eiusmod high life accusamus terry
+                  richardson ad squid. Nihil anim keffiyeh helvetica, craft beer
+                  labore wes anderson cred nesciunt sapiente ea proident. a
+                  proident. Anim pariatur cliche reprehenderit, enim eiusmod
+                  high life accusamus terry richardson ad squid. Nihil anim
+                  keffiyeh helvetica, craft beer labore wes anderson cred
+                  nesciunt sapiente ea proident. a proident. Anim pariatur
+                  cliche reprehenderit, enim eiusmod high life accusamus terry
+                  richardson ad squid. Nihil anim keffiyeh helvetica, craft beer
+                  labore wes anderson cred nesciunt sapiente ea proident. a
+                  proident. Anim pariatur cliche reprehenderit, enim eiusmod
+                  high life accusamus terry richardson ad squid. Nihil anim
+                  keffiyeh helvetica, craft beer labore wes anderson cred
                   nesciunt sapiente ea proident.
-                  a proident. Anim pariatur cliche reprehenderit, enim
-                  eiusmod high life accusamus terry richardson ad squid. Nihil
-                  anim keffiyeh helvetica, craft beer labore wes anderson cred
-                  nesciunt sapiente ea proident.
-                  a proident. Anim pariatur cliche reprehenderit, enim
-                  eiusmod high life accusamus terry richardson ad squid. Nihil
-                  anim keffiyeh helvetica, craft beer labore wes anderson cred
-                  nesciunt sapiente ea proident.
-                  a proident. Anim pariatur cliche reprehenderit, enim
-                  eiusmod high life accusamus terry richardson ad squid. Nihil
-                  anim keffiyeh helvetica, craft beer labore wes anderson cred
-                  nesciunt sapiente ea proident.
-                  a proident. Anim pariatur cliche reprehenderit, enim
-                  eiusmod high life accusamus terry richardson ad squid. Nihil
-                  anim keffiyeh helvetica, craft beer labore wes anderson cred
-                  nesciunt sapiente ea proident.
-
                 </SimpleBar>
               </Card>
             </div>
           </Collapse>
         </div>
-                
+        <div className="d-flex flex-row m-auto align-items-center justify-content-center">
+          <Button href="/register" variant="success" size="lg" className="p-3 mx-3">
+            Sign In
+          </Button>
+          <Button variant="danger" href="/shop" size="lg" className="p-3 mx-3">
+            Shop
+          </Button>
+        </div>
       </Container>
     );
   }

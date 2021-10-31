@@ -11,14 +11,13 @@ import "react-pro-sidebar/dist/css/styles.css";
 export default function SideBar() {
   return (
     <ProSidebar
-      className=""
       id="sidebar"
       toggled={true}
       breakPoint="xs"
       width="200px"
     >
       <SidebarHeader
-        className="text-light font-weight-bold p-5 d-flex"
+        className="text-light font-weight-bold pt-3 pb-3 text-center"
         style={{ fontSize: "30px" }}
       >
         <a
