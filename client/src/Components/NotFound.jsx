@@ -5,7 +5,7 @@ export default function NotFound() {
     setTimeout(() => window.location.replace("http://localhost:3000/"), 5000);
   };
   return (
-    <Container className="m-auto text-center font-weight-bold position-absolute top-50 start-50 translate-middle display-1">
+    <Container className="m-auto text-center font-weight-bold  position-absolute top-50 start-50 translate-middle display-1">
       <header>
         <h1 className="mb-5 display-1 text-weight-bold">TikoWeb</h1>
       </header>

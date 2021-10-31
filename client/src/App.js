@@ -12,7 +12,6 @@ import NavBar from './Components/NavBar';
 import NotFound from "./Components/NotFound";
 import Register from "./Components/User";
 import './Components/css/main.css'
-
 function App() {
   return (
     <div >

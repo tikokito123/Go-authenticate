@@ -1,7 +1,7 @@
 import React from "react";
 import Signup from "./Signup";
 import Signin from "./Signin";
-import { Container, Toast } from "react-bootstrap";
+import { Toast } from "react-bootstrap";
 //import "../css/main.css";
 
 export default function Register() {

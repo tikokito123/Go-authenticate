@@ -4,7 +4,6 @@ import {
   MenuItem,
   SubMenu,
   SidebarHeader,
-  SidebarContent,
   SidebarFooter,
 } from "react-pro-sidebar";
 import "react-pro-sidebar/dist/css/styles.css";
@@ -16,6 +15,7 @@ export default function SideBar() {
       id="sidebar"
       toggled={true}
       breakPoint="xs"
+      width="200px"
     >
       <SidebarHeader
         className="text-light font-weight-bold p-5 d-flex"

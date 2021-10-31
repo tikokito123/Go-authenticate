@@ -1,23 +1,23 @@
-import React, { Component } from "react";
+import React from "react";
 
 class NavBar extends React.Component {
   render() {
     return (
       <nav
         id="mainnavbar"
-        class="navbar navbar-expand-sm navbar-dark bg-dark position-sticky"
+        className="navbar navbar-expand-sm navbar-dark bg-dark position-sticky"
         style={{ top: "0", width: "100%", height: "10%", zIndex: "10" }}
       >
-        <div class="container-fluid">
+        <div className="container-fluid">
           <a
-            class="navbar-brand"
+            className="navbar-brand"
             href="/"
             style={{ fontSize: "30px", marginBottom: "6px" }}
           >
             TikoWeb
           </a>
           <button
-            class="navbar-toggler"
+            className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarText"
@@ -25,44 +25,44 @@ class NavBar extends React.Component {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span class="navbar-toggler-icon"></span>
+            <span className="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse m-2" id="navbarText">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/">
+          <div className="collapse navbar-collapse m-2" id="navbarText">
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+              <li className="nav-item">
+                <a className="nav-link active" aria-current="page" href="/">
                   Home
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/enter-chat">
+              <li className="nav-item">
+                <a className="nav-link" href="/enter-chat">
                   Chat
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/Shop">
+              <li className="nav-item">
+                <a className="nav-link" href="/Shop">
                   Shop
                 </a>
               </li>
               <li>
-                <a class="nav-link" href="/about-us">
+                <a className="nav-link" href="/about-us">
                   About us!
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/register">
+              <li className="nav-item">
+                <a className="nav-link" href="/register">
                   Register!
                 </a>
               </li>
               <li>
-                <button class="btn btn-outline-success me-2" type="submit">
+                <button className="btn btn-outline-success me-2" type="submit">
                   <a href="/donate" style={{ color: "inherit" }}>
                     Donate
                   </a>
                 </button>
               </li>
             </ul>
-            <span class="navbar-text h4 m-2">
+            <span className="navbar-text h4 m-2">
               The Place To Improve Yourself
             </span>
           </div>

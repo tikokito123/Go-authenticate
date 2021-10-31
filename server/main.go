@@ -15,6 +15,12 @@ import (
 
 func handleRequests() {
 	router := mux.NewRouter()
+
+	/*
+		please use it when you want to serve static files!
+		router.PathPrefix("/").Handler(http.FileServer(http.Dir("./static/")))
+		serving static files!
+	*/
 	//subroutersc
 	users := router.PathPrefix("/users").Subrouter()
 	auth := router.PathPrefix("/auth").Subrouter()
@@ -22,6 +28,7 @@ func handleRequests() {
 	auth.Use(middleware.Authenticate)
 
 	router.HandleFunc("/", homePage).Methods("GET")
+	router.HandleFunc("/ws", routes.WebSocketEndPoint)
 	//users
 	users.HandleFunc("/create", routes.CreateNewUser).Methods("POST")
 	users.HandleFunc("/sign-in", routes.SignInUser).Methods("POST")

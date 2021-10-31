@@ -5,6 +5,7 @@ body {
   background-repeat: no-repeat;
   background: url("../../images/backround.jpeg");
   background-size: cover;
+  overflow: hidden;
 }
 * {
   box-sizing: border-box;

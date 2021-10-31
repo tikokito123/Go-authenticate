@@ -1,12 +1,22 @@
-section {
-    color: white;
-    font-weight: 900;
-    position: relative;
-    overflow: auto;
-    font-size: 1.35rem;
-    line-height: 2.6rem;
-    padding: 33rem;
-    align-items: center;
-    left: 5%; 
-    height: 300px;
+#info {
+  color: white;
+  font-weight: 900;
+  position: relative;
+  font-size: 1.35rem;
+  line-height: 2.6rem;
+  padding: 33rem;
+  align-items: center;
+  left: 5%;
+  height: 300px;
+}
+
+#home-button {
+  height: 10rem;
+  width: 20rem;
+  float: inherit;
+  font-size: 3.6rem;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  border: solid 0.2564rem;
 }
