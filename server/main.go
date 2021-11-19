@@ -23,13 +23,13 @@ func handleRequests() {
 	*/
 	//subroutersc
 	users := router.PathPrefix("/users").Subrouter()
-	auth := router.PathPrefix("/auth").Subrouter()
+
 	//middlewares athunticate
-	auth.Use(middleware.Authenticate)
 
 	router.HandleFunc("/", homePage).Methods("GET")
 	router.HandleFunc("/ws", routes.WebSocketEndPoint)
 	//users
+	users.Handle("/auth", middleware.Authenticate(http.HandlerFunc(authPage))).Methods("GET")
 	users.HandleFunc("/create", routes.CreateNewUser).Methods("POST")
 	users.HandleFunc("/sign-in", routes.SignInUser).Methods("POST")
 
@@ -62,8 +62,8 @@ func authPage(w http.ResponseWriter, r *http.Request) {
 } //todo delete
 
 func homePage(w http.ResponseWriter, r *http.Request) {
-	fp := path.Join("templates", "index.html")
 
+	fp := path.Join("templates", "index.html")
 	tmpl, err := template.ParseFiles(fp)
 	if err != nil {
 		logrus.Error(err.Error())

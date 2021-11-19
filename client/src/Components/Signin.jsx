@@ -41,7 +41,7 @@ class Signin extends React.Component {
       headers: {
         "content-type": "application/json",
       },
-      body: this.state,
+      body: JSON.stringify(this.state),
     });
     const json = await res.json();
     console.log(json);

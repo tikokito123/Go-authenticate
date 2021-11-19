@@ -11,17 +11,27 @@ import {
 } from "react-bootstrap";
 import SimpleBar from "simplebar-react";
 import "simplebar/dist/simplebar.min.css";
-
+import Cookies from 'js-cookie';
 class Chat extends React.Component {
+
+  state = {
+    message: '',
+    username: '',
+  }
+
+  fetchUser = () => {
+    
+  }
+
   handleNavColor = () => {
     document.getElementById("mainnavbar").className =
       "navbar navbar-expand-lg navbar-light bg-light p-4 rounded";
   };
-
+  
   handleSubmit = (e) => {
     e.preventDefault();
 
-    //fetching
+    //fetching message...
   };
 
   socketConnection = () => {
@@ -31,6 +41,8 @@ class Chat extends React.Component {
     socket.onopen = () => {
       console.log("connected!");
       //todo send user text
+      
+
       socket.send("Hi from client");
     };
 
@@ -46,6 +58,7 @@ class Chat extends React.Component {
   componentDidMount() {
     this.handleNavColor();
     this.socketConnection();
+    this.fetchUser();
   }
   render() {
     return (

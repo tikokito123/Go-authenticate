@@ -35,7 +35,7 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("content-type", "application/json")
 	params := mux.Vars(r)
 
-	id, _ := primitive.ObjectIDFromHex(params["id"])
+	id, _ := primitive.ObjectIDFromHex(params["token"])
 	var user models.User
 
 	client, _ = database.GetMongoClient()
@@ -60,7 +60,7 @@ func CreateNewUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("content-type", "application/json")
 
 	var user models.User
-	// layout := "01/02 03:04:05PM '06 -0700"
+
 	r.ParseForm()
 
 	// user.Email = r.FormValue("email")
@@ -125,42 +125,52 @@ func CreateNewUser(w http.ResponseWriter, r *http.Request) {
 	http.SetCookie(w, &cookie)
 
 	http.Redirect(w, r, "/users/", http.StatusMovedPermanently)
+	json.NewEncoder(w).Encode(user)
 }
 
 func SignInUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("content-type", "application/json")
+	//todo change the names!
+	type requestUser struct {
+		Email    string `json:"email" bson:"email"`
+		Password string `json:"password" bson:"password,omitempty"`
+	}
+	var currentUser requestUser
 
 	var user models.User
 
-	r.ParseForm()
-
-	username := r.FormValue("username")
-	password := r.FormValue("password")
+	if err := json.NewDecoder(r.Body).Decode(&currentUser); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		logrus.Error(err.Error())
+		return
+	}
 
 	client, _ = database.GetMongoClient()
 
 	collection := client.Database(database.DB).Collection(database.Collection_users)
 
-	if err := collection.FindOne(context.Background(), bson.M{"username": username}).Decode(&user); err != nil {
+	if err := collection.FindOne(context.Background(), bson.M{"email": currentUser.Email}).Decode(&user); err != nil {
 		logrus.Error(err.Error())
-		fmt.Fprintln(w, "username or passwod are not mutch!")
+		fmt.Fprintln(w, "username or passwrod are not mutch!")
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
-	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(currentUser.Password)); err != nil {
 		logrus.Error("username or password are not mutch")
 		fmt.Fprintln(w, "username or passwod are not mutch!")
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
-	token, _ := GenerateToken(user.Username)
-
+	token, _ := GenerateToken(user.ID.String())
+	//todo delete
 	cookie := http.Cookie{Name: "jwt", Value: token, MaxAge: 0, Path: "/"}
 	http.SetCookie(w, &cookie)
-
+	logrus.Info("logged in!")
 	http.Redirect(w, r, "/auth/", http.StatusMovedPermanently)
+
+	json.NewEncoder(w).Encode(user.Username)
 }
 
 func GetUsers(w http.ResponseWriter, r *http.Request) {
@@ -207,7 +217,7 @@ func GenerateToken(username string) (string, error) {
 	claims["exp"] = time.Now().Add(time.Minute * 30).Unix()
 
 	tokenString, err := token.SignedString(jwt_key)
-	logrus.Info(tokenString)
+
 	if err != nil {
 		logrus.Error("something went wrong", err.Error())
 		return "", err

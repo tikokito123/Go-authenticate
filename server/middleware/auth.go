@@ -35,14 +35,14 @@ func Authenticate(next http.Handler) http.Handler {
 			return
 		}
 
-		logrus.Info(r.RequestURI)
-
 		if !token.Valid {
 			fmt.Fprintf(w, "Not Authorized")
 		}
 
-		ctx := context.WithValue(r.Context(), token, token.Raw)
-		r = r.WithContext(ctx)
-		next.ServeHTTP(w, r)
+		claims := token.Claims.(jwt.MapClaims)
+		user := claims["user"]
+
+		ctx := context.WithValue(r.Context(), "user_id", user)
+		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }

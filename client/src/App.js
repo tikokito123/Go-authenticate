@@ -1,8 +1,8 @@
 import {
   BrowserRouter as Router,
   Route,
-  Switch,
-  Redirect,
+  Routes,
+  Navigate,
 } from "react-router-dom";
 import Chat from "./Components/Chat";
 import EnterChat from "./Components/EnterChat";
@@ -18,14 +18,14 @@ function App() {
       <Router>
         <NavBar />
         <SideBar />
-        <Switch>
-          <Route component={Register} path="/register" />
-          <Route component={EnterChat} path="/enter-chat" />
-          <Route component={Chat} path="/chat" />
-          <Route exact component={Home} path="/" />
-          <Route component={NotFound} path="/not-found" />
-          <Redirect to="/not-found" />
-        </Switch>
+        <Routes>
+          <Route element={<Register />} path="/register" />
+          <Route element={<EnterChat />} path="/enter-chat" />
+          <Route element={<Chat />} path="/chat" />
+          <Route element={<NotFound />} path="*" />
+          <Route element={<Home />} path="/" />
+          <Navigate to="/not-found" />
+        </Routes>
       </Router>
     </div>
   );
