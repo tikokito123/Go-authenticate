@@ -103,7 +103,7 @@ func main() {
 		FullTimestamp: true,
 	})
 
-	err := godotenv.Load(".env.dev")
+	err := godotenv.Load(".dev.env")
 	if err != nil {
 		logrus.Warn("could not find env file")
 	}

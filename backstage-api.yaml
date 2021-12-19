@@ -1,0 +1,17 @@
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: golang-api
+  description: Retrieve 
+spec:
+  type: openapi
+  lifecycle: production
+  owner: amir.lev@tikalk.com
+  system: 
+  definition: |
+    openapi: "3.0.0"
+    info:
+      version: 1.0.0
+      title: test API
+      license:
+        name: MIT

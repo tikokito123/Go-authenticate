@@ -22,14 +22,14 @@ var mongoOnce sync.Once
 //I have used below constants just to hold required database config's.
 
 const (
-	DB               = "Golang"
+	DB               = "Twogether"
 	Collection_tests = "testing"
 	Collection_users = "users"
 )
 
 //GetMongoClient - Return mongodb connection to work with
 func GetMongoClient() (*mongo.Client, error) {
-	godotenv.Load(".env.dev")
+	godotenv.Load(".dev.env")
 	//Perform connection creation operation only once.
 	mongoOnce.Do(func() {
 		// Set client options

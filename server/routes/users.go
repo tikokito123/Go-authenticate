@@ -90,7 +90,6 @@ func CreateNewUser(w http.ResponseWriter, r *http.Request) {
 		logrus.Error(err.Error())
 		return
 	}
-
 	collection := client.Database(database.DB).Collection(database.Collection_users)
 
 	ctx, cancle := context.WithTimeout(context.Background(), 20*time.Second)
@@ -110,7 +109,6 @@ func CreateNewUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	logrus.Info(result)
-
 	token, err := GenerateToken(user.Username)
 	if err != nil {
 		log.Print("error")
